@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 
-import json
 import boto3
 from botocore.exceptions import ClientError
 
@@ -11,15 +10,18 @@ available_regions=['us-east-2', 'us-east-1', 'us-west-1', 'us-west-2', 'ap-south
 #available_regions=['us-east-2', 'us-east-1']
 resource=list(raw_input("Enter the resource name seperated by comas : ").split(','))
 
-for x in resource:
-   for region in available_regions:
+def VPCReg():
+  #for x in resource:
+    for region in available_regions:
       try:
         ec2 = boto3.client('ec2',region_name = region)
-        response = ec2.describe_vpcs(VpcIds = [x])
+        response=ec2.describe_vpcs(VpcIds = [x])
         if True:
-          print (json.dumps(response,sort_keys=True, indent=4))
-           #for i in response['VpnGateways']:
-            # print i['VpnGatewayId']
+          #return region
+          print region
           break
       except:
-        pass  
+        pass
+
+for x in resource:
+   VPCReg()

@@ -1,0 +1,14 @@
+or rule in sg.rules:
+    if str(rule.from_port) == '22':
+        ec2.revoke_security_group(group_name=sg_name,
+                                  ip_protocol='tcp',
+                                  from_port='22',
+                                  to_port='22',
+                                  cidr_ip=rule.grants[0])
+
+#Authorize today's Public IP
+ec2.authorize_security_group(group_name=sg_name,
+                             ip_protocol='tcp',
+                             from_port='22',
+                             to_port='22',
+                             cidr_ip=get_public_ip()+"/32")
